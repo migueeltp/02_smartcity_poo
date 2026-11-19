@@ -9,11 +9,21 @@ class Vehiculo:
         self.nivel_bateria: float = 100.0  # Comienza con la carga completa (%)
         self.kilometros_totales: float = 0.0
 
+    @property
+    def kilometros_totales(self) -> float:
+        return self._kilometros_totales
+
+    @kilometros_totales.setter
+    def kilometros_totales(self, nuevos_km: float):
+        if nuevos_km < self._kilometros_totales:
+            raise ValueError("Los kilómetros no pueden disminuir.")
+        self._kilometros_totales = nuevos_km
+
+
     def conducir(self, distancia_km: float) -> bool:
         """Simula un trayecto urbano. Consume 0.15 kWh por cada km recorrido."""
         energia_necesaria = distancia_km * 0.15
         porcentaje_consumido = (energia_necesaria / self.capacidad_kwh) * 100.0
-
         # Comprobamos si la batería actual cubre el consumo
         if self.nivel_bateria >= porcentaje_consumido:
             self.nivel_bateria -= porcentaje_consumido
