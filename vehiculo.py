@@ -7,7 +7,7 @@ class Vehiculo:
         self.modelo: str = modelo
         self.capacidad_kwh: float = capacidad_kwh
         self.nivel_bateria: float = 100.0  # Comienza con la carga completa (%)
-        self.kilometros_totales: float = 0.0
+        self._kilometros_totales: float = 0.0
 
     @property
     def kilometros_totales(self) -> float:
@@ -18,7 +18,6 @@ class Vehiculo:
         if nuevos_km < self._kilometros_totales:
             raise ValueError("Los kilómetros no pueden disminuir.")
         self._kilometros_totales = nuevos_km
-
 
     def conducir(self, distancia_km: float) -> bool:
         """Simula un trayecto urbano. Consume 0.15 kWh por cada km recorrido."""
