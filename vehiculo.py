@@ -10,6 +10,17 @@ class Vehiculo:
         self._kilometros_totales: float = 0.0
 
     @property
+    def nivel_bateria(self) -> float:
+        """Getter: Devuelve el porcentaje de batería actual."""
+        return self._nivel_bateria
+
+    @nivel_bateria.setter
+    def nivel_bateria(self, nuevo_nivel: float) -> None:
+        """Setter: Valida que el nivel se encuentre siempre en el rango [0.0, 100.0]."""
+        if nuevo_nivel < 0.0 or nuevo_nivel > 100.0:
+            raise ValueError(f"Nivel de batería inválido: {nuevo_nivel}%. Debe estar entre 0 y 100.")
+        self._nivel_bateria = nuevo_nivel
+    @property
     def kilometros_totales(self) -> float:
         return self._kilometros_totales
 
