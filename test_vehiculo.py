@@ -33,3 +33,22 @@ try:
     print("❌ FALLO: El sistema permitió reducir el odómetro.")
 except ValueError as error:
     print(f"✅ ÉXITO: Bloqueado por el setter -> {error}")
+
+from vehiculo import CocheElectrico, PatineteElectrico
+
+coche = CocheElectrico("3456-LMN", "Urban-SUV", 50.0, plazas=5)
+patinete = PatineteElectrico("PAT-001", "EcoKick", 0.5, velocidad_maxima=25.0)
+
+print("--- Comparativa de Consumo: Viaje de 10 km ---")
+coche.conducir(10.0)
+patinete.conducir(10.0)
+
+print(coche.obtener_estado())
+print(patinete.obtener_estado())
+
+print("\n--- Prueba de Validación: Exceso de velocidad en patinete ---")
+try:
+    patinete_trucado = PatineteElectrico("PAT-FAST", "SpeedMaster", 1.0, velocidad_maxima=45.0)
+    print("❌ FALLO: Permitió crear un patinete a más de 25 km/h.")
+except ValueError as err:
+    print(f"✅ ÉXITO: Bloqueado correctamente -> {err}")

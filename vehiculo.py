@@ -90,7 +90,7 @@ class PatineteElectrico(Vehiculo):
         super().__init__(matricula, modelo, capacidad_kwh)
         # 2. Inicializamos el atributo exclusivo de esta subclase
         self.velocidad_maxima: float = velocidad_maxima
-        if self.velocidad_maxima >= 25:
+        if self.velocidad_maxima > 25:
             raise ValueError("La velocidad máxima legal en ciudad es 25 km/h.")
 
     def conducir(self, distancia_km: float) -> bool:
