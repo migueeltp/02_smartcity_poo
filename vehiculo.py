@@ -54,3 +54,58 @@ class Vehiculo:
         self.nivel_bateria += porcentaje_recarga
         energia_cargada = (porcentaje_recarga / 100.0) * self.capacidad_kwh
         return energia_cargada
+class CocheElectrico(Vehiculo):
+    """Subclase que representa un automóvil eléctrico de pasajeros."""
+
+    def __init__(self, matricula: str, modelo: str, capacidad_kwh: float, plazas: int = 5):
+        # 1. Delegamos en la superclase para inicializar los atributos comunes
+        super().__init__(matricula, modelo, capacidad_kwh)
+        # 2. Inicializamos el atributo exclusivo de esta subclase
+        self.plazas: int = plazas
+
+    def conducir(self, distancia_km: float) -> bool:
+        """Consume 0.15 kWh por km recorrido."""
+        if distancia_km < 0:
+            return False
+
+        energia_necesaria = distancia_km * 0.15
+        porcentaje_consumido = (energia_necesaria / self.capacidad_kwh) * 100.0
+
+        if self.nivel_bateria >= porcentaje_consumido:
+            self.nivel_bateria -= porcentaje_consumido
+            self.kilometros_totales += distancia_km
+            return True
+        return False
+
+    def obtener_estado(self) -> str:
+        """Sobreescribe obtener_estado() añadiendo las plazas del vehículo."""
+        estado_base = super().obtener_estado()
+        return f"{estado_base} | Plazas: {self.plazas}"
+
+class PatineteElectrico(Vehiculo):
+    """Subclase que representa un patinete eléctrico urbano."""
+
+    def __init__(self, matricula: str, modelo: str, capacidad_kwh: float, velocidad_maxima: float = 25.0):
+        # 1. Delegamos en la superclase para inicializar los atributos comunes
+        super().__init__(matricula, modelo, capacidad_kwh)
+        # 2. Inicializamos el atributo exclusivo de esta subclase
+        self.velocidad_maxima: float = velocidad_maxima
+        if self.velocidad_maxima >= 25:
+            raise ValueError("La velocidad máxima legal en ciudad es 25 km/h.")
+
+    def conducir(self, distancia_km: float) -> bool:
+        """Consume 0.02 kWh por km recorrido."""
+        if distancia_km < 0:
+            return False
+
+        energia_necesaria = distancia_km * 0.02
+        porcentaje_consumido = (energia_necesaria / self.capacidad_kwh) * 100.0
+
+        if self.nivel_bateria >= porcentaje_consumido:
+            self.nivel_bateria -= porcentaje_consumido
+            self.kilometros_totales += distancia_km
+            return True
+        return False
+
+
+
